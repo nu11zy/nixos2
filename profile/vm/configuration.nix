@@ -5,7 +5,7 @@
     ../../hardware-configuration.nix
     home-manager.nixosModules.home-manager
 
-
+    ../../system/shell/bash.nix
   ];
 
   # ensure nix flakes are enabled
@@ -73,10 +73,9 @@
 
   ];
 
-  # default shell (zsh)
-  # environment.shells = with pkgs; [ zsh ];
-  users.defaultUserShell = pkgs.sh;
-  # programs.zsh.enable = true;
+  # default shell (bash)
+  environment.shells = with pkgs; [ bash ];
+  users.defaultUserShell = pkgs.bash;
 
   # version
   system.stateVersion = "22.11";
