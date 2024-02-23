@@ -1,8 +1,9 @@
-{ lib, pkgs, customSettings, ... }:
+{ lib, pkgs, pkgs-stable, customSettings, home-manager, ... }:
 
 {
   imports = [
     ../../hardware-configuration.nix
+    home-manager.nixosModules.home-manager
   ];
 
   # ensure nix flakes are enabled
@@ -10,6 +11,18 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  # enable home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${customSettings.username} = import ./home.nix;
+    extraSpecialArgs = {
+      inherit pkgs;
+      inherit pkgs-stable;
+      inherit customSettings;
+    };
+  };
 
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;

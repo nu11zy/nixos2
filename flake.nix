@@ -32,21 +32,8 @@
         system = "x86_64-linux";
         modules = [
           ./profile/vm/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${customSettings.username} = import ./profile/vm/home.nix;
-            home-manager.extraSpecialArgs = {
-              inherit pkgs;
-              inherit pkgs-stable;
-              inherit customSettings;
-            };
-          }
         ];
-        specialArgs = {
-          inherit pkgs-stable;
-          inherit customSettings;
-        };
+        specialArgs = { inherit pkgs-stable customSettings home-manager; };
       };
     };
   };
