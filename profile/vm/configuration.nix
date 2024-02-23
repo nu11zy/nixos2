@@ -1,4 +1,4 @@
-{ lib, pkgs, systemSettings, userSettings, ... }:
+{ lib, pkgs, customSettings, ... }:
 
 {
   imports = [
@@ -23,28 +23,28 @@
   boot.loader.grub.useOSProber = true;
 
   # networking
-  networking.hostName = systemSettings.hostname;
+  networking.hostName = customSettings.hostname;
   networking.networkmanager.enable = true;
 
   # timezone and locale
-  time.timeZone = systemSettings.timezone;
-  i18n.defaultLocale = systemSettings.locale;
+  time.timeZone = customSettings.timezone;
+  i18n.defaultLocale = customSettings.locale;
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = systemSettings.regionFormat;
-    LC_IDENTIFICATION = systemSettings.regionFormat;
-    LC_MEASUREMENT = systemSettings.regionFormat;
-    LC_MONETARY = systemSettings.regionFormat;
-    LC_NAME = systemSettings.regionFormat;
-    LC_NUMERIC = systemSettings.regionFormat;
-    LC_PAPER = systemSettings.regionFormat;
-    LC_TELEPHONE = systemSettings.regionFormat;
-    LC_TIME = systemSettings.regionFormat;
+    LC_ADDRESS = customSettings.regionFormat;
+    LC_IDENTIFICATION = customSettings.regionFormat;
+    LC_MEASUREMENT = customSettings.regionFormat;
+    LC_MONETARY = customSettings.regionFormat;
+    LC_NAME = customSettings.regionFormat;
+    LC_NUMERIC = customSettings.regionFormat;
+    LC_PAPER = customSettings.regionFormat;
+    LC_TELEPHONE = customSettings.regionFormat;
+    LC_TIME = customSettings.regionFormat;
   };
 
   # user account
-  users.users.${userSettings.username} = {
+  users.users.${customSettings.username} = {
     isNormalUser = true;
-    description = userSettings.username;
+    description = customSettings.username;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     uid = 1000;

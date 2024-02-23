@@ -1,8 +1,8 @@
-{ pkgs, userSettings, ... }:
+{ pkgs, customSettings, ... }:
 
 {
-  home.username = userSettings.username;
-  home.homeDirectory = "/home/"+userSettings.username;
+  home.username = customSettings.username;
+  home.homeDirectory = "/home/"+customSettings.username;
 
   programs.home-manager.enable = true;
 

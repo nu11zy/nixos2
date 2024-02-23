@@ -3,28 +3,23 @@
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
   let
-    # ---- SYSTEM SETTINGS ---- #
-    systemSettings = {
-      system = "x86_64-linux";
+    # ---- CUSTOM SETTINGS ---- #
+    customSettings = {
       hostname = "hostname";
+      username = "username";
       timezone = "Europe/Moscow";
       locale = "en_US.UTF-8";
       regionFormat = "ru_RU.UTF-8";
     };
 
-    # ----- USER SETTINGS ----- #
-    userSettings = rec {
-      username = "username";
-    };
-
     # configure pkgs
     pkgs = import nixpkgs {
-      system = systemSettings.system;
+      system = customSettings.system;
       config = { allowUnfree = true; allowUnfreePredicate = (_: true); };
     };
 
     pkgs-stable = import nixpkgs-stable {
-      system = systemSettings.system;
+      system = customSettings.system;
       config = { allowUnfree = true; allowUnfreePredicate = (_: true); };
     };
 
@@ -34,25 +29,23 @@
   in {
     nixosConfigurations = {
       vm = lib.nixosSystem {
-        system = systemSettings.system;
+        system = "x86_64-linux";
         modules = [
           ./profile/vm/configuration.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${userSettings.username} = import ./profile/vm/home.nix;
+            home-manager.users.${customSettings.username} = import ./profile/vm/home.nix;
             home-manager.extraSpecialArgs = {
               inherit pkgs;
               inherit pkgs-stable;
-              inherit systemSettings;
-              inherit userSettings;
+              inherit customSettings;
             };
           }
         ];
         specialArgs = {
           inherit pkgs-stable;
-          inherit systemSettings;
-          inherit userSettings;
+          inherit customSettings;
         };
       };
     };
