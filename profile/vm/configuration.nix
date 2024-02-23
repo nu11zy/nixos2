@@ -4,6 +4,8 @@
   imports = [
     ../../hardware-configuration.nix
     home-manager.nixosModules.home-manager
+
+
   ];
 
   # ensure nix flakes are enabled
@@ -43,15 +45,15 @@
   time.timeZone = customSettings.timezone;
   i18n.defaultLocale = customSettings.locale;
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = customSettings.regionFormat;
-    LC_IDENTIFICATION = customSettings.regionFormat;
-    LC_MEASUREMENT = customSettings.regionFormat;
-    LC_MONETARY = customSettings.regionFormat;
-    LC_NAME = customSettings.regionFormat;
-    LC_NUMERIC = customSettings.regionFormat;
-    LC_PAPER = customSettings.regionFormat;
-    LC_TELEPHONE = customSettings.regionFormat;
-    LC_TIME = customSettings.regionFormat;
+    LC_ADDRESS = customSettings.extraLocale;
+    LC_IDENTIFICATION = customSettings.extraLocale;
+    LC_MEASUREMENT = customSettings.extraLocale;
+    LC_MONETARY = customSettings.extraLocale;
+    LC_NAME = customSettings.extraLocale;
+    LC_NUMERIC = customSettings.extraLocale;
+    LC_PAPER = customSettings.extraLocale;
+    LC_TELEPHONE = customSettings.extraLocale;
+    LC_TIME = customSettings.extraLocale;
   };
 
   # user account
@@ -66,11 +68,15 @@
   # system packages
   environment.systemPackages = with pkgs; [
     git
+    nano
+    wget
+
   ];
 
-  # default shell (bash)
-  environment.shells = with pkgs; [ bash ];
-  users.defaultUserShell = pkgs.bash;
+  # default shell (zsh)
+  # environment.shells = with pkgs; [ zsh ];
+  users.defaultUserShell = pkgs.sh;
+  # programs.zsh.enable = true;
 
   # version
   system.stateVersion = "22.11";

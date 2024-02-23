@@ -9,7 +9,7 @@
       username = "username";
       timezone = "Europe/Moscow";
       locale = "en_US.UTF-8";
-      regionFormat = "ru_RU.UTF-8";
+      extraLocale = "ru_RU.UTF-8";
     };
 
     # configure pkgs
