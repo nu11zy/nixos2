@@ -7,12 +7,11 @@ let
 
 in {
   programs.bash = {
-    enable = true;
     enableCompletion = true;
     shellAliases = myAliases;
   };
 
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     bat
     hexyl
   ];
