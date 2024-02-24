@@ -10,5 +10,6 @@
     ];
     fontconfig = {
       enable = true;
+    };
   };
 }
