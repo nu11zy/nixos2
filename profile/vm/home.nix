@@ -8,6 +8,8 @@
 
   imports = [
     ../../user/shell/zsh.nix
+    ../../user/app/vscode.nix
+    ../../user/app/chromium.nix
   ];
 
   home.stateVersion = "22.11";
