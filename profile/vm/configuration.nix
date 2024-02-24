@@ -63,17 +63,20 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     uid = 1000;
+    shell = pkgs.zsh; # user shell
   };
+
+  # default user shell (zsh)
+  programs.zsh.enable = true;
 
   # system packages
   environment.systemPackages = with pkgs; [
     git
     nano
     wget
-
   ];
 
-  # default shell (bash)
+  # default system shell (bash)
   environment.shells = with pkgs; [ bash ];
   users.defaultUserShell = pkgs.bash;
 
