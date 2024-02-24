@@ -9,11 +9,12 @@
     ../../system/wm/dwm.nix
   ];
 
-  # ensure nix flakes are enabled
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
+  # nix settings (https://nixos.org/manual/nix/stable/command-ref/conf-file.html)
+  nix.settings = {
+    warn-dirty = false;
+    experimental-features = "nix-command flakes";
+    auto-optimise-store = true;
+  };
 
   # enable home-manager
   home-manager = {
@@ -39,8 +40,12 @@
   boot.loader.grub.useOSProber = true;
 
   # networking
-  networking.hostName = customSettings.hostname;
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = customSettings.hostname;
+    networkmanager.enable = true;
+    enableIPv6 = false;
+    firewall.enable = false;
+  };
 
   # timezone and locale
   time.timeZone = customSettings.timezone;
