@@ -8,5 +8,7 @@
       noto-fonts-color-emoji
       jetbrains-mono
     ];
+    fontconfig = {
+      enable = true;
   };
 }
