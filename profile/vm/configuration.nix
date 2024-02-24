@@ -6,6 +6,7 @@
     home-manager.nixosModules.home-manager
 
     ../../system/shell/bash.nix
+    ../../system/wm/dwm.nix
   ];
 
   # ensure nix flakes are enabled
