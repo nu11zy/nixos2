@@ -3,6 +3,7 @@
 {
   imports = [
     ./fonts.nix
+    ./pipewire.nix
   ];
 
   services.xserver = {
@@ -10,8 +11,5 @@
     xkb.layout = "us";
     xkb.variant = "";
     excludePackages = [ pkgs.xterm ];
-    displayManager = {
-      lightdm.enable = true;
-    };
   };
 }
