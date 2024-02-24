@@ -10,6 +10,11 @@
     ];
     fontconfig = {
       enable = true;
+      defaultFonts = {
+        monospace = ["JetBrains Mono"];
+        serif = ["Noto Serif"];
+        sansSerif = ["Noto Sans"];
+      };
     };
   };
 }
