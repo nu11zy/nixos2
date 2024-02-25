@@ -7,11 +7,11 @@
 
   services.xserver.displayManager = {
     lightdm.enable = true;
-    defaultSession = "none+awesome";
+    defaultSession = "none+dwm";
   };
   
-  services.xserver.windowManager.awesome.enable = true;
-  services.xserver.windowManager.awesome.noArgb = true;
+  services.xserver.windowManager.dwm.enable = true;
 
+  # nm-applet
   programs.nm-applet.enable = true;
 }

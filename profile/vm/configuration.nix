@@ -43,8 +43,6 @@
   networking = {
     hostName = customSettings.hostname;
     networkmanager.enable = true;
-    networkmanager.ethernet.macAddress = "random";
-    networkmanager.wifi.macAddress = "random";
     enableIPv6 = false;
     firewall.enable = false;
   };

@@ -10,6 +10,7 @@
     ../../user/shell/zsh.nix
     ../../user/app/vscode.nix
     ../../user/app/chromium.nix
+    ../../user/terminal/alacritty.nix
   ];
 
   home.stateVersion = "22.11";

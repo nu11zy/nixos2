@@ -3,8 +3,6 @@
 {
   imports = [
     ./fonts.nix
-    ./pipewire.nix
-    ./keyring.nix
   ];
 
   services.xserver = {
