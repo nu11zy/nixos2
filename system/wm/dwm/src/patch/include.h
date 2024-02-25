@@ -16,6 +16,7 @@
 #include "cyclelayouts.h"
 #include "decorationhints.h"
 #include "focusfollowmouse.h"
+#include "pertag.h"
 #include "swallow.h"
 #include "zoomswap.h"
 /* Layouts */

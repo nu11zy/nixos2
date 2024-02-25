@@ -226,6 +226,7 @@ typedef struct {
 } Layout;
 
 
+typedef struct Pertag Pertag;
 struct Monitor {
 	char ltsymbol[16];
 	float mfact;
@@ -243,6 +244,7 @@ struct Monitor {
 	Monitor *next;
 	Bar *bar;
 	const Layout *lt[2];
+	Pertag *pertag;
 };
 
 typedef struct {
@@ -703,6 +705,7 @@ cleanupmon(Monitor *mon)
 			systray->bar = NULL;
 		free(bar);
 	}
+	free(mon->pertag);
 	free(mon);
 }
 
@@ -916,6 +919,26 @@ createmon(void)
 	}
 
 
+	if (!(m->pertag = (Pertag *)calloc(1, sizeof(Pertag))))
+		die("fatal: could not malloc() %u bytes\n", sizeof(Pertag));
+	m->pertag->curtag = 1;
+	for (i = 0; i <= NUMTAGS; i++) {
+
+		/* init nmaster */
+		m->pertag->nmasters[i] = m->nmaster;
+
+		/* init mfacts */
+		m->pertag->mfacts[i] = m->mfact;
+
+
+		m->pertag->prevzooms[i] = NULL;
+
+		/* init layouts */
+		m->pertag->ltidxs[i][0] = m->lt[0];
+		m->pertag->ltidxs[i][1] = m->lt[1];
+		m->pertag->sellts[i] = m->sellt;
+
+	}
 
 
 	return m;
@@ -1354,7 +1377,7 @@ grabkeys(void)
 void
 incnmaster(const Arg *arg)
 {
-	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
+	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
 	arrange(selmon);
 }
 
@@ -2004,10 +2027,12 @@ void
 setlayout(const Arg *arg)
 {
 	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt]) {
-		selmon->sellt ^= 1;
+		selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
+		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
 	}
 	if (arg && arg->v)
-		selmon->lt[selmon->sellt] = (Layout *)arg->v;
+		selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+	selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
 
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
 	if (selmon->sel)
@@ -2027,7 +2052,7 @@ setmfact(const Arg *arg)
 	f = arg->f < 1.0 ? arg->f + selmon->mfact : arg->f - 1.0;
 	if (f < 0.05 || f > 0.95)
 		return;
-	selmon->mfact = f;
+	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag] = f;
 	arrange(selmon);
 }
 
@@ -2280,11 +2305,28 @@ void
 toggleview(const Arg *arg)
 {
 	unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);;
+	int i;
 
 
 	if (newtagset) {
 		selmon->tagset[selmon->seltags] = newtagset;
 
+		if (newtagset == ~0)
+		{
+			selmon->pertag->curtag = 0;
+		}
+		/* test if the user did not select the same tag */
+		if (!(newtagset & 1 << (selmon->pertag->curtag - 1))) {
+			for (i = 0; !(newtagset & 1 << i); i++) ;
+			selmon->pertag->curtag = i + 1;
+		}
+
+		/* apply settings for this view */
+		selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
+		selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
+		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
+		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
+		selmon->lt[selmon->sellt^1] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt^1];
 		arrange(selmon);
 		focus(NULL);
 	}
@@ -2313,8 +2355,14 @@ unmanage(Client *c, int destroyed)
 	XWindowChanges wc;
 
 	/* Make sure to clear any previous zoom references to the client being removed. */
-	if (c == prevzoom)
-		prevzoom = NULL;
+	int i;
+	for (m = mons; m; m = m->next) {
+		for (i = 0; i <= NUMTAGS; i++) {
+			if (m->pertag->prevzooms[i] == c) {
+				m->pertag->prevzooms[i] = NULL;
+			}
+		}
+	}
 	m = c->mon;
 
 	if (c->swallowing) {
@@ -2652,6 +2700,7 @@ view(const Arg *arg)
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK)
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+	pertagview(arg);
 	arrange(selmon);
 	focus(NULL);
 }
@@ -2740,12 +2789,12 @@ zoom(const Arg *arg)
 		return;
 
 	if (c == nexttiled(c->mon->clients)) {
-		p = prevzoom;
+		p = c->mon->pertag->prevzooms[c->mon->pertag->curtag];
 		at = findbefore(p);
 		if (at)
 			cprevious = nexttiled(at->next);
 		if (!cprevious || cprevious != p) {
-			prevzoom = NULL;
+			c->mon->pertag->prevzooms[c->mon->pertag->curtag] = NULL;
 			if (!c || !(c = nexttiled(c->next)))
 				return;
 		} else
@@ -2759,7 +2808,7 @@ zoom(const Arg *arg)
 	attach(c);
 	/* swap windows instead of pushing the previous one down */
 	if (c != cold && at) {
-		prevzoom = cold;
+		c->mon->pertag->prevzooms[c->mon->pertag->curtag] = cold;
 		if (cold && at != cold) {
 			detach(cold);
 			cold->next = at->next;
