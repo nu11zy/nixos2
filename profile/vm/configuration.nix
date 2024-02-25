@@ -6,7 +6,7 @@
     home-manager.nixosModules.home-manager
 
     ../../system/shell/bash.nix
-    ../../system/wm/dwm.nix
+    ../../system/wm/awesome.nix
   ];
 
   # nix settings (https://nixos.org/manual/nix/stable/command-ref/conf-file.html)
