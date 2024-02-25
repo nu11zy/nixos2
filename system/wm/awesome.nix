@@ -12,4 +12,6 @@
   
   services.xserver.windowManager.awesome.enable = true;
   services.xserver.windowManager.awesome.noArgb = true;
+
+  programs.nm-applet.enable = true;
 }
