@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./x11.nix
+    ../x11.nix
   ];
 
   services.xserver.displayManager = {
@@ -11,6 +11,9 @@
   };
   
   services.xserver.windowManager.dwm.enable = true;
+  services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
+    src = ./src;
+  };
 
   # nm-applet
   programs.nm-applet.enable = true;

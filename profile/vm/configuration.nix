@@ -6,7 +6,12 @@
     home-manager.nixosModules.home-manager
 
     ../../system/shell/bash.nix
-    ../../system/wm/awesome.nix
+    
+    ../../system/wm/dwm/dwm.nix
+    ../../system/wm/pipewire.nix
+    ../../system/wm/keyring.nix
+
+    ../../system/app/virtualbox.nix
   ];
 
   # nix settings (https://nixos.org/manual/nix/stable/command-ref/conf-file.html)
