@@ -7,6 +7,9 @@
 
     home-manager.nixosModules.home-manager
 
+    ../../system/wm/xfce/xfce.nix
+    ../../system/wm/pipewire.nix
+
     ../../system/shell/bash.nix
 
     ../../system/app/virtualbox.nix
