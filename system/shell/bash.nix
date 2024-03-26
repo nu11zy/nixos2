@@ -2,7 +2,7 @@
 
 let
   myAliases = {
-    cat = "bat";
+    ll = "ls -la";
   };
 
 in {

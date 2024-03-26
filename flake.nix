@@ -35,6 +35,13 @@
         ];
         specialArgs = { inherit pkgs-stable customSettings home-manager; };
       };
+      void = lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./profile/void/configuration.nix
+        ];
+        specialArgs = { inherit pkgs-stable customSettings home-manager; };
+      };
     };
   };
 
