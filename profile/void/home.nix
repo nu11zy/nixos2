@@ -9,6 +9,7 @@
   imports = [
     ../../user/shell/zsh.nix
     ../../user/app/chromium.nix
+     ../../user/app/vscode.nix
     ../../user/terminal/alacritty.nix
   ];
 
