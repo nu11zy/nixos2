@@ -9,6 +9,7 @@
 
     ../../system/wm/xfce/xfce.nix
     ../../system/wm/pipewire.nix
+    ../../system/wm/printer.nix
 
     ../../system/shell/bash.nix
 
