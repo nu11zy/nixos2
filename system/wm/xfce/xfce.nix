@@ -4,6 +4,7 @@
   imports = [
     ../x11.nix
     ../fonts.nix
+    ../pipewire.nix
   ];
 
   services.xserver.displayManager = {
