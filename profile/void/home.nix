@@ -12,6 +12,9 @@
 
     ../../user/app/chromium.nix
     ../../user/app/vscode.nix
+    ../../user/app/thunar.nix
+
+    ../../user/gtk.nix
   ];
 
   home.stateVersion = "22.11";
