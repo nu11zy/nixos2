@@ -35,4 +35,20 @@
     xfce.xfce4-pulseaudio-plugin
     xfce.xfce4-whiskermenu-plugin
   ];
+
+  programs = {
+    dconf.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-media-tags-plugin
+        thunar-volman
+      ];
+    };
+  };
 }
