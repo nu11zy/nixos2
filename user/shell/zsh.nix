@@ -2,7 +2,7 @@
 
 let
   myAliases = {
-    cat = "bat";
+    ll = "ls -la";
   };
 
 in {
@@ -15,7 +15,5 @@ in {
   };
 
   home.packages = with pkgs; [
-    bat
-    hexyl
   ];
 }

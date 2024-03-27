@@ -1,15 +1,16 @@
 {
-  description = "NixOS flake";
+  description = "My NixOS flake";
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
   let
     # ---- CUSTOM SETTINGS ---- #
     customSettings = {
-      hostname = "hostname";
-      username = "username";
+      hostname = "nixos";
+      username = "nu11z";
       timezone = "Europe/Moscow";
       locale = "en_US.UTF-8";
       extraLocale = "ru_RU.UTF-8";
+      system = "x86_64-linux";
     };
 
     # configure pkgs

@@ -8,7 +8,6 @@
     home-manager.nixosModules.home-manager
 
     ../../system/wm/xfce/xfce.nix
-    ../../system/wm/pipewire.nix
     ../../system/wm/printer.nix
 
     ../../system/shell/bash.nix
@@ -41,7 +40,10 @@
   # bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices # FIX ME
+
+  # LUKS =========================
+  boot.initrd.luks.devices # FIXME
+  # ==============================
 
   # networking
   networking = {
@@ -84,6 +86,8 @@
     git
     nano
     wget
+    htop
+    lm_sensors
   ];
 
   # default system shell (bash)
