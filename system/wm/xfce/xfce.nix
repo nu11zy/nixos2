@@ -28,11 +28,8 @@
     xfce.xfce4-panel
     xfce.xfce4-notifyd
     xfce.xfce4-xkb-plugin
-    xfce.xfce4-genmon-plugin
-    xfce.xfce4-weather-plugin
     xfce.xfce4-sensors-plugin
     xfce.xfce4-docklike-plugin
-    xfce.xfce4-windowck-plugin
     xfce.xfce4-datetime-plugin
     xfce.xfce4-time-out-plugin
     xfce.xfce4-pulseaudio-plugin
