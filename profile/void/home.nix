@@ -15,6 +15,7 @@
     ../../user/app/thunar.nix
 
     ../../user/gtk.nix
+    ../../user/gpg.nix
   ];
 
   home.stateVersion = "22.11";
