@@ -12,7 +12,7 @@
     displayManager = {
       lightdm = {
         enable = true;
-        greeters.tiny.enable = true;
+        greeters.slick.enable = true;
       };
       defaultSession = "xfce";
     };

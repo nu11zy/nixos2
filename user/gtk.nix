@@ -5,13 +5,13 @@
     enable = true;
 
     iconTheme = {
-      name = "elementary-Xfce-dark";
-      package = pkgs.elementary-xfce-icon-theme;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
 
     theme = {
-      name = "zukitre-dark";
-      package = pkgs.zuki-themes;
+      name = "Nordic-darker-standart-buttons";
+      package = pkgs.nordic;
     };
 
     gtk3.extraConfig = {
