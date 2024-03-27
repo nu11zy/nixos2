@@ -12,7 +12,6 @@
 
     ../../user/app/chromium.nix
     ../../user/app/vscode.nix
-    ../../user/app/thunar.nix
 
     ../../user/gtk.nix
     ../../user/gpg.nix
@@ -27,7 +26,7 @@
     obsidian    # note taking app
     obs-studio  # screen recorder
     flameshot   # screenshot
-    onlyoffice-bin_7_5 # office tools
+    onlyoffice-bin_latest # office tools
     gnome.gnome-disk-utility # manage disks
     appimage-run # .appimage support
     gimp        # phostoshop
